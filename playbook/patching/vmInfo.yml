@@ -1,0 +1,37 @@
+- name: Get Virtual Machines Information
+  hosts: local
+  gather_facts: no
+  vars_files:
+   - variablefile
+  tasks:
+    - name: Gather all registered virtual machines
+      community.vmware.vmware_vm_info:
+        hostname: "{{esxi_hostname}}"
+        username: "{{esxi_username}}"
+        password: "{{esxi_password}}"
+        vm_type: vm
+        validate_certs: no
+
+      delegate_to: localhost
+      register: vminfo
+
+    - name: Delete Existing file
+      file:
+       state: absent
+       path: varDir/temp
+      delegate_to: localhost
+    - local_action: copy content={{ vminfo }} dest=varDir/temp
+
+    - name: Display results
+      debug:
+        var: vminfo
+
+    - name: Run a script using an executable in a system path
+      ansible.builtin.script: ./scripts/filter.py
+      args:
+       executable: python3
+      delegate_to: localhost
+      register: vmDict
+    - name: Resultant Dictionary
+      debug:
+        var: vmDict.stdout_lines

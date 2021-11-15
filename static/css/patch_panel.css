@@ -1,0 +1,112 @@
+/* Center the webpage */
+html, body{
+    height: 100%;
+}
+
+body{
+  font-family: 'Roboto Mono', monospace;
+  color: white;
+  background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+  background-repeat: no-repeat;
+  /*
+  background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
+  */
+}
+h2{
+  font-family: 'Kings', cursive;
+}
+header{
+  margin: 2%;
+  margin-bottom: 5%;
+  text-align: center;
+}
+.mytitle{
+  margin-top: 1%;
+  text-align: center;
+}
+.maincontainer{
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.mycssclass{
+  width: 60%;
+}
+
+#connectHypButton{
+  width: 200px;
+  height: 40px;
+  margin-left: 70%;
+  margin-bottom: 3%;
+  background-color: green;
+  color: white;
+  border: solid green;
+  border-radius: 20px;
+  cursor: pointer;
+
+}
+
+
+#vmtextbox{
+  margin-top: 5%;
+  height: 200px;
+  width:85%;
+  margin-bottom: 3%;
+}
+
+#selectVMbutton{
+  width: 210px;
+  height: 40px;
+  margin-left: 68%;
+  margin-bottom: 2%;
+  background-color:  green ;
+  color: white;
+  border: solid  green ;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+#patchTextarea{
+  height: 60vh;
+}
+
+#executeButton{
+  float: right;
+  width: 200px;
+  height: 40px;
+  margin-right: 1%;
+  margin-bottom: 3%;
+  background-color: red;
+  color: white;
+  border: solid red;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.col{
+  height:75vh;
+  border: 1px solid black;
+  border-radius: 20px;
+  margin: 1px;
+  overflow: auto;
+  clear:both;
+}
+
+/* Dropdown Menu */
+
+.dropdown-submenu {
+  position: relative;
+
+}
+
+.subvalues {
+  width: max-content;
+}
+
+.dropdown-submenu .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -1px;
+
+}
+

@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0"/>
+    <title>vSmooth</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kings&family=Roboto+Mono:wght@200&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/patch_panel.css' %}">
+
+    <script>
+
+      $(document).ready(function(){
+
+        $('.chkvalues').click(function(){
+
+          var txt = ""
+          $('.chkvalues:checked').each(function(){
+            txt+=$(this).val()+","
+          })
+          txt=txt.substring(0,txt.length-1);
+          $('#vmtextbox').val(txt)
+        });
+
+      });
+
+    </script>
+  </head>
+  <body>
+
+    <div class="mytitle">
+      <h2>vSmooth</h2>
+      <h4>VMware ESXi Linux Virtual Machines Patch Panel </h4>
+    </div>
+
+    <div class="maincontainer">
+    <div class="row mh-100"> <!--IT WOULD BE THE ROW CONTAINS TWO PANELS-->
+
+      <!--------------------------------------------------------------->
+      <div class="col"><!--1st Panel having hypervisor info + select vms -->
+
+        <!-- First Container -->
+        <div class="container">
+
+          <form method="post">
+
+            <header> VMware ESXi - vSmooth</header>
+
+            {{ form1.as_p }}
+            {% csrf_token %}
+
+            <input type="submit" name="connectHypervisorInfo" value="Connect Hypervisor" id="connectHypButton">
+          </form>
+
+          <form method="post">
+
+            {% csrf_token %}
+            <!--Dorpdown menu-->
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select Virtual Machines
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                {% if virtual_machines %}
+                {% for vm, value in virtual_machines.items %}
+                <!--virtual machines checkbox-->
+                <li class="dropdown-submenu">
+                  <input type="checkbox" value={{vm}} class="chkvalues"><a class="test" tabindex="-1" href="#">{{vm}} <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li class="subvalues"><a tabindex="-1" href="#">{{ value.os }}</a></li>
+                      <li class="subvalues"><a tabindex="-1" href="#">{{ value.ip }}</a></li>
+                    </ul>
+              </li>
+                <!--End of virtual machine checkbox-->
+                {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+            <!--End of Dropdown menu-->
+
+            <!--<input type="text" name="vm_names" id="vmtextbox"></br>-->
+            <!--Inserting new text area of bootstrap -->
+            <div class="form-group purple-border">
+              <textarea class="form-control" name="vm_names" id="vmtextbox"></textarea>
+            </div>
+            <!--End of text area-->
+            <input type="submit" name="selectVMname" value="Confirm Selected VMs" id="selectVMbutton">
+          </form>
+
+        </div>
+        <!-- End of First Container -->
+
+
+      </div><!--End of 1st panel-->
+      <!--------------------------------------------------------------->
+
+      <!--------------------------------------------------------------->
+      <div class="col"> <!--2nd Panel having commands -->
+
+        <!--Second Container-->
+        <div class="secondContainer">
+          <form method="post">
+	    {% csrf_token %}
+            <!-- Text area from boostrap start -->
+            <div class="form-group purple-border" style="margin-top:1%;">
+              <label for="exampleFormControlTextarea4">Virtual Machines Patch</label>
+              <textarea class="form-control" id="patchTextarea" rows="3"></textarea>
+            </div>
+            <!-- End of Text area -->
+
+            <input type="submit" name="" id="executeButton" value="Execute">
+          </form>
+        </div>
+        <!--End of Second Container-->
+
+      </div><!--End of the the 2nd Panel-->
+      <!--------------------------------------------------------------->
+    </div><!-- THE END OF THE ROW HAVING BOTH PANELS-->
+
+  </div>
+
+
+
+
+
+    <script>
+    $(document).ready(function(){
+      $('.dropdown-submenu a.test').on("click", function(e){
+        $(this).next('ul').toggle();
+        e.stopPropagation();
+        e.preventDefault();
+      });
+    });
+    </script>
+
+  </body>
+</html>

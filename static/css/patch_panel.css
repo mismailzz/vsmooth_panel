@@ -49,10 +49,7 @@ header{
 
 
 #vmtextbox{
-  margin-top: 5%;
-  height: 200px;
-  width:85%;
-  margin-bottom: 3%;
+  height: 32vh;
 }
 
 #selectVMbutton{
@@ -68,7 +65,7 @@ header{
 }
 
 #patchTextarea{
-  height: 60vh;
+  height: 70vh;
 }
 
 #executeButton{
@@ -84,29 +81,27 @@ header{
   cursor: pointer;
 }
 .col{
-  height:75vh;
+  height:85vh;
   border: 1px solid black;
   border-radius: 20px;
   margin: 1px;
-  overflow: auto;
   clear:both;
+  /*overflow: auto;*/
 }
 
 /* Dropdown Menu */
 
 .dropdown-submenu {
-  position: relative;
-
+  position:relative;
 }
 
 .subvalues {
-  width: max-content;
+  /*width: max-content;*/
+  width: 300px;
 }
 
 .dropdown-submenu .dropdown-menu {
   top: 0;
   left: 100%;
   margin-top: -1px;
-
 }
-

@@ -1,2 +1,4 @@
 #Don't track python cache files
-*.pyc
+patching/__pycache__/*
+scripts/patching/__pycache__/*
+vsmooth/__pycache__/*

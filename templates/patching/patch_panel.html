@@ -47,7 +47,7 @@
     <div class="row mh-100"> <!--IT WOULD BE THE ROW CONTAINS TWO PANELS-->
 
       <!--------------------------------------------------------------->
-      <div class="col"><!--1st Panel having hypervisor info + select vms -->
+      <div class="col border-right"><!--1st Panel having hypervisor info + select vms -->
 
         <!-- First Container -->
         <div class="container">
@@ -59,7 +59,7 @@
             {{ form1.as_p }}
             {% csrf_token %}
 
-            <input type="submit" name="connectHypervisorInfo" value="Connect Hypervisor" id="connectHypButton">
+            <input type="submit" name="connectHypervisorInfo" value="Connect Hypervisor" id="connectHypButton" class="btn btn-outline-success">
           </form>
 
           <form method="post">
@@ -94,7 +94,7 @@
               <textarea class="form-control" name="vm_names" id="vmtextbox"></textarea>
             </div>
             <!--End of text area-->
-            <input type="submit" name="selectVMname" value="Confirm Selected VMs" id="selectVMbutton">
+            <input type="submit" name="selectVMname" value="Confirm Selected VMs" id="selectVMbutton" class="btn btn-outline-info">
           </form>
 
         </div>
@@ -118,7 +118,7 @@
             </div>
             <!-- End of Text area -->
 
-            <input type="submit" name="" id="executeButton" value="Execute">
+            <input type="submit" name="" id="executeButton" value="Execute" class="btn btn-outline-warning">
           </form>
         </div>
         <!--End of Second Container-->

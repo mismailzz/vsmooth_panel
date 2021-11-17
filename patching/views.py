@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from . import forms
-from patching.forms import HypervisorInfo_Form 
+from patching.forms import HypervisorInfo_Form
 import scripts.patching.vmfilter as ansible_vminfo
+import scripts.patching.controller as ansible_controller
 import json
 import os
 
@@ -24,11 +25,16 @@ def connect_select_patch(request):
 
         if hypervisorForm.is_valid():
             print("Validation")
-            print("IP: ", hypervisorForm.cleaned_data['esxi_hostname'])
-            print("User: ", hypervisorForm.cleaned_data['esxi_username'])
-            print("Password: ", hypervisorForm.cleaned_data['esxi_password'])
-            vm_resultjson()
-            vm_readJson()
+            #print("IP: ", hypervisorForm.cleaned_data['esxi_hostname'])
+            #print("User: ", hypervisorForm.cleaned_data['esxi_username'])
+            #print("Password: ", hypervisorForm.cleaned_data['esxi_password'])
+            vhostname = hypervisorForm.cleaned_data['esxi_hostname']
+            vusername = hypervisorForm.cleaned_data['esxi_username']
+            vpassword = hypervisorForm.cleaned_data['esxi_password']
+            ansible_varfile = "playbook/patching/variablefile"
+            vmware_hypervisor = ansible_controller.VMwareHypervisorVariables(vhostname, vusername, vpassword, ansible_varfile)
+            #vm_resultjson()
+            #vm_readJson()
             #form.save(commit=True)
             #return index(request)
             #my_dict_vms = {'virtual_machines': vm_readJson()}

@@ -18,6 +18,6 @@
     - name: Delete Existing file
       file:
        state: absent
-       path: temp/patching/ansible_vmresult
+       path: ../../temp/patching/ansible_vmresult
       delegate_to: localhost
-    - local_action: copy content={{ vminfo }} dest=temp/patching/ansible_vmresult
+    - local_action: copy content={{ vminfo }} dest=../../temp/patching/ansible_vmresult

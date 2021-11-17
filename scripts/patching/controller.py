@@ -70,35 +70,80 @@ def startpatch():
 class VMwareHypervisorVariables:
 
 
-    def __init__(self, esxi_hostname, esxi_username, esxi_password, ansible_variablefile):
-        server_hostname = " esxi_hostname: \"" + esxi_hostname + "\"\n"
-        server_username = " esxi_username: \"" + esxi_username + "\"\n"
-        server_password = " esxi_password: \"" + esxi_password + "\"\n"
+    def __init__(self, esxi_hostname=None, esxi_username=None, esxi_password=None, ansible_playbookPath=None):
+
+        """
+        OURLOAD CONSTRUCTOR BY DEFAULT VALUES TO OPERATE FOR BOTH SCENERIOS WITH/WITOUT
+        ARGUMENTS. BECAUSE WE DON'T WANT TO REINITIALIZE OR CREATE THE VARIABLE FILE
+        FOR THE HYPERVISOR IN CASE OF VIRTUAL MACHINE
+        """
+        if esxi_hostname and esxi_username and esxi_password and ansible_playbookPath:
+            """
+            THIS IS THE CONSTRUCTOR THAT WILL MAKE/CONFIGURE THE FILES FOR THE HYPERVISOR
+            THAT ARE FUNDAMENTAL FOR BUILDING THE CONNECTION
+            """
+            #ENTER SERVER INFORMATION IF VARIABLE FILE FOR ANSIBLE PLAYBOOK
+            server_hostname = " esxi_hostname: \"" + esxi_hostname + "\"\n"
+            server_username = " esxi_username: \"" + esxi_username + "\"\n"
+            server_password = " esxi_password: \"" + esxi_password + "\"\n"
+
+            #To empty variable file
+            variableFilePath = ansible_playbookPath + "hypvariablefile"
+            temp_command = ">" + variableFilePath
+            os.system(temp_command) #empty file
+
+            variablefile = open(variableFilePath,"a")
+            variablefile.write(server_hostname)
+            variablefile.write(server_username)
+            variablefile.write(server_password)
+            variablefile.close()
+            #---------------------------------------------------------------
+            # READY THE ANSIBLE CONFIGURATION FILE
+            ansibe_cfgPath = ansible_playbookPath + "ansible.cfg"
+            temp_command = ">" + ansibe_cfgPath
+            os.system(temp_command)
+            ansible_cfg = open(ansibe_cfgPath,"a")
+            ansible_cfg.write("[defaults]\n")
+            ansible_cfg.write("host_key_checking = False \n")
+            ansible_cfg.write("inventory = inventory.ini \n")
+            ansible_cfg.close()
+            #---------------------------------------------------------------
+            # READY THE ANSIBLE INVENTORY FILE
+            ansible_inventoryPath = ansible_playbookPath + "inventory.ini"
+            temp_command = ">" + ansible_inventoryPath
+            os.system(temp_command)
+            inventoryfile = open(ansible_inventoryPath,"a")
+            inventoryfile.write("[local]\n")
+            inventoryfile.write( esxi_hostname + "\n")
+            inventoryfile.close()
+            #---------------------------------------------------------------
+        else:
+            pass
+
+    def vmCredentialsInfo(self, vm_username, vm_password, ansible_playbookPath):
+        """
+        SIMILAR PATTERN WILL BE FOLLOWED AS ABOVE FOR APPENDING INFORMATION
+        FOR THE VM BUT IN THIS CASE WE WILL BUILD SEPARATE FILE FROM variable
+        OF THE HYPERVISOR BECAUSE WE HAVE TWO SEPARATE PORTION FORMS OF
+        HYPERVISOR AND VM, DUE TO WHICH IF THE USER ENTER THE VM CREDENTIONAL
+        INFO REPEATEDLY THEN THE APPEND MODE IN THE HYPERVISOR HAVE MANY
+        ENTERIES OF VM CREDENTIONALS IN THE VARAIABLE FILE OF HYPERVISOR. IN
+        SEPARATE WE CAN CREATE NEW EVERY TIME
+        """
+        #ENTER VM INFORMATION IF VARIABLE FILE FOR ANSIBLE PLAYBOOK
+        guestvm_username = " guestvm_username: \"" + vm_username + "\"\n"
+        guestvm_password = " guestvm_password: \"" + vm_password + "\"\n"
 
         #To empty variable file
-        temp_command = ">" + ansible_variablefile
+        variableFilePath = ansible_playbookPath + "vmvariablefile"
+        temp_command = ">" + variableFilePath
         os.system(temp_command) #empty file
 
-        variablefile = open(ansible_variablefile,"a")
-        variablefile.write(server_hostname)
-        variablefile.write(server_username)
-        variablefile.write(server_password)
+        variablefile = open(variableFilePath,"a")
+        variablefile.write(guestvm_username)
+        variablefile.write(guestvm_password)
         variablefile.close()
 
-        temp_command = ">" + "playbook/patching/ansible.cfg"
-        os.system(temp_command)
-        inventoryfile = open("playbook/patching/ansible.cfg","a")
-        inventoryfile.write("[defaults]\n")
-        inventoryfile.write("host_key_checking = False \n")
-        inventoryfile.write("inventory = inventory.ini \n")
-        inventoryfile.close()
-
-        temp_command = ">" + "playbook/patching/inventory.ini"
-        os.system(temp_command)
-        inventoryfile = open("playbook/patching/inventory.ini","a")
-        inventoryfile.write("[local]\n")
-        inventoryfile.write( esxi_hostname + "\n")
-        inventoryfile.close()
 
     def vmInfo(self):
         getVmInformation()

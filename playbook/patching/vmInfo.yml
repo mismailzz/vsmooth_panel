@@ -2,7 +2,7 @@
   hosts: local
   gather_facts: no
   vars_files:
-   - variablefile
+   - hypvariablefile
   tasks:
     - name: Gather all registered virtual machines
       community.vmware.vmware_vm_info:

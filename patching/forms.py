@@ -1,6 +1,6 @@
 from django import forms
 from django.core import validators
-from patching.models import HypervisorInfo
+from patching.models import HypervisorInfo, VirtualMachineInfo
 
 
 class HypervisorInfo_Form(forms.ModelForm):
@@ -13,4 +13,13 @@ class HypervisorInfo_Form(forms.ModelForm):
             'esxi_username': forms.TextInput(attrs={'class': 'mycssclass'}),
             'esxi_password': forms.TextInput(attrs={'class': 'mycssclass'}),
             'esxi_password': forms.PasswordInput(),
+        }
+
+class VirtualMachineInfo_Form(forms.ModelForm):
+    class Meta:
+        model = VirtualMachineInfo
+        fields = ('vm_username', 'vm_password',)
+        widgets = {
+            'vm_username': forms.TextInput(attrs={'class': 'mycssclass'}),
+            'vm_password': forms.PasswordInput(attrs={'class': 'mycssclass'}),
         }

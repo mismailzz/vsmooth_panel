@@ -11,8 +11,7 @@ class HypervisorInfo_Form(forms.ModelForm):
         widgets = {
             'esxi_hostname': forms.TextInput(attrs={'class': 'mycssclass'}),
             'esxi_username': forms.TextInput(attrs={'class': 'mycssclass'}),
-            'esxi_password': forms.TextInput(attrs={'class': 'mycssclass'}),
-            'esxi_password': forms.PasswordInput(),
+            'esxi_password': forms.PasswordInput(attrs={'class': 'mycssclass'}),
         }
 
 class VirtualMachineInfo_Form(forms.ModelForm):

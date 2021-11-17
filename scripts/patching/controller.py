@@ -85,5 +85,20 @@ class VMwareHypervisorVariables:
         variablefile.write(server_password)
         variablefile.close()
 
+        temp_command = ">" + "playbook/patching/ansible.cfg"
+        os.system(temp_command)
+        inventoryfile = open("playbook/patching/ansible.cfg","a")
+        inventoryfile.write("[defaults]\n")
+        inventoryfile.write("host_key_checking = False \n")
+        inventoryfile.write("inventory = inventory.ini \n")
+        inventoryfile.close()
+
+        temp_command = ">" + "playbook/patching/inventory.ini"
+        os.system(temp_command)
+        inventoryfile = open("playbook/patching/inventory.ini","a")
+        inventoryfile.write("[local]\n")
+        inventoryfile.write( esxi_hostname + "\n")
+        inventoryfile.close()
+
     def vmInfo(self):
         getVmInformation()

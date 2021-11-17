@@ -20,18 +20,4 @@
        state: absent
        path: varDir/temp
       delegate_to: localhost
-    - local_action: copy content={{ vminfo }} dest=varDir/temp
-
-    - name: Display results
-      debug:
-        var: vminfo
-
-    - name: Run a script using an executable in a system path
-      ansible.builtin.script: ./scripts/filter.py
-      args:
-       executable: python3
-      delegate_to: localhost
-      register: vmDict
-    - name: Resultant Dictionary
-      debug:
-        var: vmDict.stdout_lines
+    - local_action: copy content={{ vminfo }} dest=temp/patching/ansible_vmresult

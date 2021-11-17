@@ -13,6 +13,11 @@ class HypervisorInfo_Form(forms.ModelForm):
             'esxi_username': forms.TextInput(attrs={'class': 'mycssclass'}),
             'esxi_password': forms.PasswordInput(attrs={'class': 'mycssclass'}),
         }
+        labels = {
+            'esxi_hostname': ('ESXi Hostname'),
+            'esxi_username': ('ESXi Username'),
+            'esxi_password': ('ESXi Password'),
+        }
 
 class VirtualMachineInfo_Form(forms.ModelForm):
     class Meta:
@@ -21,4 +26,8 @@ class VirtualMachineInfo_Form(forms.ModelForm):
         widgets = {
             'vm_username': forms.TextInput(attrs={'class': 'mycssclass'}),
             'vm_password': forms.PasswordInput(attrs={'class': 'mycssclass'}),
+        }
+        labels = {
+            'vm_username': ('VM Username'),
+            'vm_password': ('VM Password'),
         }

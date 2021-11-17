@@ -74,21 +74,19 @@ class VMwareHypervisorVariables:
         server_hostname = " esxi_hostname: \"" + esxi_hostname + "\"\n"
         server_username = " esxi_username: \"" + esxi_username + "\"\n"
         server_password = " esxi_password: \"" + esxi_password + "\"\n"
-        print(server_hostname)
-        print(server_username)
-        print(server_password)
-        
+        #print(server_hostname)
+        #print(server_username)
+        #print(server_password)
+
         #To empty variable file
-        """
         temp_command = ">" + ansible_variablefile
-        os.system(">variablefile")
+        os.system(temp_command) #empty file
 
         variablefile = open(ansible_variablefile,"a")
         variablefile.write(server_hostname)
         variablefile.write(server_username)
         variablefile.write(server_password)
         variablefile.close()
-        """
 
     def vmInfo(self):
         getVmInformation()

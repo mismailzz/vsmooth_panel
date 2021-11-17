@@ -33,6 +33,7 @@ def connect_select_patch(request):
             vpassword = hypervisorForm.cleaned_data['esxi_password']
             ansible_varfile = "playbook/patching/variablefile"
             vmware_hypervisor = ansible_controller.VMwareHypervisorVariables(vhostname, vusername, vpassword, ansible_varfile)
+            vmware_hypervisor.vmInfo()
             vm_resultjson()
             #vm_readJson()
             #form.save(commit=True)

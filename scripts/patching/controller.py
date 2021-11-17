@@ -8,7 +8,7 @@ def scriptEndExecution():
  os.system("rm -f vmInventory")
 
 def getVmInformation():
- os.system("ansible-playbook playbook/patching/vmInfo.yml -e 'ansible_python_interpreter=/usr/bin/python3'")
+ os.system(" ansible-playbook -i playbook/patching/inventory.ini playbook/patching/vmInfo.yml -e 'ansible_python_interpreter=/usr/bin/python3'")
 
 def seletectVM():
  readVmInfo = open("vmInventory", "r")

@@ -54,10 +54,15 @@ def connect_select_patch(request):
 
     elif 'executevmbutton' in request.POST:
         if virtualMachineForm.is_valid():
+            #GET THE CREDENTIONALS INFORMATION OF THE VIRTUAL MACHINES
             vm_username = virtualMachineForm.cleaned_data['vm_username']
             vm_password = virtualMachineForm.cleaned_date['vm_password']
             vmware_hypervisor = ansible_controller.VMwareHypervisorVariables()
             vmware_hypervisor.vmCredentialsInfo(vm_username, vm_password, ansible_playbookPath)
+            #GET THE PATCH COMMANDS INFORMATION FROM THE TEXTAREA AND SAVE TO FILE
+            if request.POST.get('vmpatch'):
+                vm_patchCommands = virtualMachineForm.cleaned_data['vmpatch']
+                print(vm_patchCommands)
 
 
     return render(request,'patching/patch_panel.html',{'form1':hypervisorForm, 'virtual_machines': virtual_machine_dict, 'form2':virtualMachineForm,})

@@ -88,10 +88,10 @@ class VMwareHypervisorVariables:
             inventoryfile.close()
             #---------------------------------------------------------------
         else:
-            pass
+            print("Without parameters")
 
     def vmSelectedInfo(self, vm_toPatched, ansible_playbookPath):
-
+        print("VM select function")
         #ENTER VM INFORMATION TO BE PATCHED IN SEPARATE VMS FILE
         if vm_toPatched != "":
             vmListvariable = '["'+ vm_toPatched.replace(',','","') + '"]'
@@ -120,6 +120,7 @@ class VMwareHypervisorVariables:
         ENTERIES OF VM CREDENTIONALS IN THE VARAIABLE FILE OF HYPERVISOR. IN
         SEPARATE WE CAN CREATE NEW EVERY TIME
         """
+        print("VM credential section")
         #ENTER VM INFORMATION IF VARIABLE FILE FOR ANSIBLE PLAYBOOK
         guestvm_username = " guestvm_username: \"" + vm_username + "\"\n"
         guestvm_password = " guestvm_password: \"" + vm_password + "\"\n"

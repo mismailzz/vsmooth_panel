@@ -8,32 +8,10 @@ def scriptEndExecution():
  os.system("rm -f vmInventory")
 
 def getVmInformation():
- os.system(" ansible-playbook -i playbook/patching/inventory.ini playbook/patching/vmInfo.yml -e 'ansible_python_interpreter=/usr/bin/python3'")
-
-
-def vmPatch_variable():
- vmguest_username=""
- vmguest_password=""
- #vmguest_shellcommand="/usr/bin/echo"
- vmguest_topatch=seletectVM()
-
- vmguest_username = input("Provide the username for VM: ")
- vmguest_password = getpass.getpass(prompt='VMware Esxi Host Guest VM Password? ')
- variablefile = open("variablefile","a")
-
- vmguest_username_string= " guestvm_username: \"" + vmguest_username + "\"\n"
- vmguest_password_string= " guestvm_password: \"" + vmguest_password + "\"\n"
- #vmguest_shellcommand_string= " vm_shellcommand_echo: \"" + vmguest_shellcommand + "\"\n"
- vmguest_topatch_string= " vm_toPatched: " + vmguest_topatch + "\n"
-
- variablefile.write(vmguest_username_string)
- variablefile.write(vmguest_password_string)
- #variablefile.write(vmguest_shellcommand_string)
- variablefile.write(vmguest_topatch_string)
- variablefile.close()
+ os.system("ansible-playbook -i playbook/patching/inventory.ini playbook/patching/vmInfo.yml -e 'ansible_python_interpreter=/usr/bin/python3'")
 
 def startpatch():
- os.system("ansible-playbook vmpatch.yml  -e 'ansible_python_interpreter=/usr/bin/python3'")
+ os.system("ansible-playbook -i playbook/patching/inventory.ini playbook/patching/vmpatch.yml  -e 'ansible_python_interpreter=/usr/bin/python3'")
 
 ##-----------------------------MAIN FUNCTION----------------------------------
 
@@ -134,7 +112,28 @@ class VMwareHypervisorVariables:
         variablefile.write(guestvm_password)
         variablefile.close()
 
+    def vm_patchCommands(self, patch_commands, ansible_playbookPath):
+
+        cmd_arr_name = "run_commands:\n"
+        #To empty variable file
+
+        patchfilePath = ansible_playbookPath + "patchCommand.yml"
+        temp_command = ">" + patchfilePath
+        os.system(temp_command) #empty file
+
+        patchfile = open(patchfilePath,"a")
+        patch_commandlist = patch_commands.split('\n')
+
+        patchfile.write(cmd_arr_name)
+        for command in patch_commandlist:
+            temp_cmd = command.replace('\r', '')
+            patchfile.write(' - "' + command + ' >> out.log 2>&1 "')
+        patchfile.close()
 
 
+    #ANSIBLE PLAYBOOK EXECUTION COMMANDS FUNCTIOIN
     def vmInfo(self):
         getVmInformation()
+
+    def vmPatch(self):
+        startpatch()

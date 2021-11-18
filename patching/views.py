@@ -49,6 +49,9 @@ def connect_select_patch(request):
         if request.POST.get('vm_names'):
             selected_vms = request.POST.get('vm_names');
             print("Virtual Machines Selected:", selected_vms)
+            vmware_hypervisor = ansible_controller.VMwareHypervisorVariables()
+            vmware_hypervisor.vmSelectedInfo(selected_vms, ansible_playbookPath)
+
     elif 'executevmbutton' in request.POST:
         if virtualMachineForm.is_valid():
             vm_username = virtualMachineForm.cleaned_data['vm_username']

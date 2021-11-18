@@ -10,36 +10,6 @@ def scriptEndExecution():
 def getVmInformation():
  os.system(" ansible-playbook -i playbook/patching/inventory.ini playbook/patching/vmInfo.yml -e 'ansible_python_interpreter=/usr/bin/python3'")
 
-def seletectVM():
- readVmInfo = open("vmInventory", "r")
- vmList=":"
- checker = None
-
- for line in readVmInfo:
-  #print(line)
-  line = line.strip() ##Remove newline character
-  prompt= line + " [ Do you want to patch it (y/n) ] - "
-  user_vmSeletection = input(prompt)
-  if(user_vmSeletection == "y"):
-   vm_name = line.split(":")
-   vmList = vmList + ", " + vm_name[1]
-   checker = True
-  elif(user_vmSeletection == "n"):
-   print(line + "- Skipped")
-  else:
-   print("INVALID OPTION SELECTION")
-   exit()
-
- readVmInfo.close()
- if (checker == True):
-  vmList = vmList.replace(':,','')
-  vmList = vmList.replace(' ,  ','", "')
-  vmList = "[\"" + vmList + "\" ]"
-  vmList = vmList.replace(" ","")
-  return vmList
- else:
-  print("NO VM SELECTED")
-  exit()
 
 def vmPatch_variable():
  vmguest_username=""
@@ -120,6 +90,26 @@ class VMwareHypervisorVariables:
         else:
             pass
 
+    def vmSelectedInfo(self, vm_toPatched, ansible_playbookPath):
+
+        #ENTER VM INFORMATION TO BE PATCHED IN SEPARATE VMS FILE
+        if vm_toPatched != "":
+            vmListvariable = '["'+ vm_toPatched.replace(',','","') + '"]'
+            vmguest_topatch_string= ' vm_toPatched: ' + vmListvariable + '\n'
+
+            #To empty variable file
+            variableFilePath = ansible_playbookPath + "vm_patchvariablefile"
+            temp_command = ">" + variableFilePath
+            os.system(temp_command) #empty file
+
+            variablefile = open(variableFilePath,"a")
+            variablefile.write(guestvm_username)
+            variablefile.write(guestvm_password)
+            variablefile.close()
+
+        else:
+            print("NO VM SELECTED")
+
     def vmCredentialsInfo(self, vm_username, vm_password, ansible_playbookPath):
         """
         SIMILAR PATTERN WILL BE FOLLOWED AS ABOVE FOR APPENDING INFORMATION
@@ -143,6 +133,7 @@ class VMwareHypervisorVariables:
         variablefile.write(guestvm_username)
         variablefile.write(guestvm_password)
         variablefile.close()
+
 
 
     def vmInfo(self):

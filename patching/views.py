@@ -53,6 +53,7 @@ def connect_select_patch(request):
             vmware_hypervisor.vmSelectedInfo(selected_vms, ansible_playbookPath)
 
     elif 'executevmbutton' in request.POST:
+        virtualMachineForm = VirtualMachineInfo_Form(request.POST)
         if virtualMachineForm.is_valid():
             #GET THE CREDENTIONALS INFORMATION OF THE VIRTUAL MACHINES
             vm_username = virtualMachineForm.cleaned_data['vm_username']
@@ -61,7 +62,7 @@ def connect_select_patch(request):
             vmware_hypervisor.vmCredentialsInfo(vm_username, vm_password, ansible_playbookPath)
         #GET THE PATCH COMMANDS INFORMATION FROM THE TEXTAREA AND SAVE TO FILE
         if request.POST.get('vmpatch'):
-            vm_patchCommands = virtualMachineForm.cleaned_data['vmpatch']
+            vm_patchCommands = request.POST.get('vmpatch')
             print(vm_patchCommands)
 
 

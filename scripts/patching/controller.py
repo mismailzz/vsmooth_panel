@@ -127,7 +127,7 @@ class VMwareHypervisorVariables:
         patchfile.write(cmd_arr_name)
         for command in patch_commandlist:
             temp_cmd = command.replace('\r', '')
-            patchfile.write(' - "' + temp_cmd + ' 2>&1 | tee -a out.log "')
+            patchfile.write(' - "' + temp_cmd + ' 2>&1 | tee -a out.log "\n')
         patchfile.close()
 
 

@@ -59,7 +59,7 @@
             {{ form1.as_p }}
             {% csrf_token %}
 
-            <input type="submit" name="connectHypervisorInfo" value="Connect Hypervisor" id="connectHypButton" class="btn btn-outline-success">
+            <input type="submit" name="connectHypervisorInfo" value="Connect Hypervisor" id="connectHypButton" class="btn btn-outline-dark">
           </form>
 
           <form method="post">
@@ -110,15 +110,16 @@
         <!--Second Container-->
         <div class="secondContainer">
           <form method="post">
-	    {% csrf_token %}
+             {{ form2.as_p }}
+	           {% csrf_token %}
             <!-- Text area from boostrap start -->
             <div class="form-group purple-border" style="margin-top:1%;">
               <label for="exampleFormControlTextarea4">Virtual Machines Patch</label>
-              <textarea class="form-control" id="patchTextarea" rows="3"></textarea>
+              <textarea class="form-control" id="patchTextarea" rows="3" name="vmpatch"></textarea>
             </div>
             <!-- End of Text area -->
 
-            <input type="submit" name="" id="executeButton" value="Execute" class="btn btn-outline-warning">
+            <input type="submit" name="executevmbutton" id="executeButton" value="Execute" class="btn btn-outline-warning">
           </form>
         </div>
         <!--End of Second Container-->

@@ -103,8 +103,7 @@ class VMwareHypervisorVariables:
             os.system(temp_command) #empty file
 
             variablefile = open(variableFilePath,"a")
-            variablefile.write(guestvm_username)
-            variablefile.write(guestvm_password)
+            variablefile.write(vmguest_topatch_string)
             variablefile.close()
 
         else:

@@ -49,7 +49,7 @@ def connect_select_patch(request):
         if request.POST.get('vm_names'):
             selected_vms = request.POST.get('vm_names');
             print("Virtual Machines Selected:", selected_vms)
-    elif 'executeButton' in request.POST:
+    elif 'executevmbutton' in request.POST:
         if virtualMachineForm.is_valid():
             vm_username = virtualMachineForm.cleaned_data['vm_username']
             vm_password = virtualMachineForm.cleaned_date['vm_password']

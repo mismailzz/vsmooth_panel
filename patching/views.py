@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 from . import forms
 from patching.forms import HypervisorInfo_Form, VirtualMachineInfo_Form
 import scripts.patching.vmfilter as ansible_vminfo
@@ -49,7 +50,7 @@ def connect_select_patch(request):
                 #return index(request)
                 virtual_machine_dict = vm_readJson()
                 ansible_console_run()
-                HttpResponseRedirect(reverse('patching:urls'))
+                HttpResponseRedirect(reverse('/'))
         else:
             print('ERROR FORM INVALID')
 

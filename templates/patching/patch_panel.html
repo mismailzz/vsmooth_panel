@@ -34,17 +34,6 @@
 
       });
 
-      function submitForm() {
-       // Get the first form with the name
-       // Usually the form name is not repeated
-       // but duplicate names are possible in HTML
-       // Therefore to work around the issue, enforce the correct index
-       var frm = document.getElementsByName('vmInfoForm')[0];
-       frm.submit(); // Submit the form
-       frm.reset();  // Reset all form data
-       return false; // Prevent page refresh
-      }
-
 
     </script>
   </head>
@@ -133,6 +122,8 @@
 
             <input type="submit" name="executevmbutton" id="executeButton" value="Execute" class="btn btn-outline-warning">
           </form>
+
+            <input type="submit" id="executeButton" value="Console" class="btn btn-outline-dark">
         </div>
         <!--End of Second Container-->
 

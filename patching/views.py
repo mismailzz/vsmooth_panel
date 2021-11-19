@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseRedirect
 from . import forms
 from patching.forms import HypervisorInfo_Form, VirtualMachineInfo_Form
 import scripts.patching.vmfilter as ansible_vminfo
@@ -42,7 +43,7 @@ def connect_select_patch(request):
             vpassword = hypervisorForm.cleaned_data['esxi_password']
             if vhostname == "" and vusername == "" and vpassword == "":
                 vmware_hypervisor = ansible_controller.VMwareHypervisorVariables(vhostname, vusername, vpassword, ansible_playbookPath)
-                #vmware_hypervisor.vmInfo()
+                vmware_hypervisor.getvmInfo()
                 vm_resultjson()
                 #form.save(commit=True)
                 #return index(request)
@@ -74,7 +75,7 @@ def connect_select_patch(request):
             vm_patchCommands = request.POST.get('vmpatch')
             print(vm_patchCommands)
             vmware_hypervisor.vm_patchCommands(vm_patchCommands, ansible_playbookPath)
-            vmware_hypervisor.vmPatch()
+            vmware_hypervisor.vmstartPatch()
         HttpResponseRedirect(reverse('patching:urls'))
 
     return render(request,'patching/patch_panel.html',{'form1':hypervisorForm, 'virtual_machines': virtual_machine_dict, 'form2':virtualMachineForm,})

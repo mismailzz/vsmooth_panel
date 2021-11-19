@@ -7,16 +7,6 @@ def scriptEndExecution():
  os.system("rm -f variablefile")
  os.system("rm -f vmInventory")
 
-def getVmInformation():
-    os.system("> temp/patching/ansible_output.log")
-    command_toexe = "ansible-playbook -i playbook/patching/inventory.ini playbook/patching/vmInfo.yml -e 'ansible_python_interpreter=/usr/bin/python3' 2>&1 | tee -a out.log"
-    os.system(command_toexe)
-
-def startpatch():
-    os.system("> temp/patching/ansible_output.log")
-    command_toexe = "ansible-playbook -i playbook/patching/inventory.ini playbook/patching/vmpatch.yml  -e 'ansible_python_interpreter=/usr/bin/python3' 2>&1 | tee -a out.log"
-    os.system(command_toexe)
-    os.system(command_toexe)
 
 ##-----------------------------MAIN FUNCTION----------------------------------
 
@@ -117,8 +107,12 @@ class VMwareHypervisorVariables:
         variablefile.write(guestvm_password)
         variablefile.close()
 
+        #GET VM INFORMATION
+        getvmInfo()
+
     def vm_patchCommands(self, patch_commands, ansible_playbookPath):
 
+        print("VM patch commands info")
         cmd_arr_name = "run_commands:\n"
         #To empty variable file
 
@@ -135,10 +129,18 @@ class VMwareHypervisorVariables:
             patchfile.write(' - "' + temp_cmd + ' 2>&1 | tee -a out.log "\n')
         patchfile.close()
 
+        #START PATCH
+        vmstartPatch()
 
     #ANSIBLE PLAYBOOK EXECUTION COMMANDS FUNCTIOIN
-    def vmInfo(self):
-        getVmInformation()
+    def getvmInfo(self):
+        os.system("> temp/patching/ansible_output.log")
+        command_toexe = "ansible-playbook -i playbook/patching/inventory.ini playbook/patching/vmInfo.yml -e 'ansible_python_interpreter=/usr/bin/python3' 2>&1 | tee -a out.log"
+        os.system(command_toexe)
 
-    def vmPatch(self):
+    def vmstartPatch(self):
         startpatch()
+        os.system("> temp/patching/ansible_output.log")
+        command_toexe = "ansible-playbook -i playbook/patching/inventory.ini playbook/patching/vmpatch.yml  -e 'ansible_python_interpreter=/usr/bin/python3' 2>&1 | tee -a out.log"
+        os.system(command_toexe)
+        os.system(command_toexe)

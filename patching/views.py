@@ -16,7 +16,7 @@ def ansible_console_page(request):
     return render(request, 'patching/ansible_console.html')
 
 def ansible_console_run():
-    os.system("frontail/frontail/bin/frontail temp/patching/ansible_output.log &")
+    os.system("frontail/bin/frontail temp/patching/ansible_output.log &")
 
 def connect_select_patch(request):
     hypervisorForm = HypervisorInfo_Form()
@@ -40,14 +40,15 @@ def connect_select_patch(request):
             vhostname = hypervisorForm.cleaned_data['esxi_hostname']
             vusername = hypervisorForm.cleaned_data['esxi_username']
             vpassword = hypervisorForm.cleaned_data['esxi_password']
-            vmware_hypervisor = ansible_controller.VMwareHypervisorVariables(vhostname, vusername, vpassword, ansible_playbookPath)
-            vmware_hypervisor.vmInfo()
-            vm_resultjson()
-            #form.save(commit=True)
-            #return index(request)
-            virtual_machine_dict = vm_readJson()
-
-            ansible_console_run()
+            if vhostname == "" and vusername == "" and vpassword == "":
+                vmware_hypervisor = ansible_controller.VMwareHypervisorVariables(vhostname, vusername, vpassword, ansible_playbookPath)
+                #vmware_hypervisor.vmInfo()
+                vm_resultjson()
+                #form.save(commit=True)
+                #return index(request)
+                virtual_machine_dict = vm_readJson()
+                ansible_console_run()
+                HttpResponseRedirect(reverse('patching:urls'))
         else:
             print('ERROR FORM INVALID')
 
@@ -58,7 +59,7 @@ def connect_select_patch(request):
             print("Virtual Machines Selected:", selected_vms)
             vmware_hypervisor = ansible_controller.VMwareHypervisorVariables()
             vmware_hypervisor.vmSelectedInfo(selected_vms, ansible_playbookPath)
-
+            HttpResponseRedirect(reverse('patching:urls'))
     elif 'executevmbutton' in request.POST:
         virtualMachineForm = VirtualMachineInfo_Form(request.POST)
         vmware_hypervisor = ansible_controller.VMwareHypervisorVariables()
@@ -74,7 +75,7 @@ def connect_select_patch(request):
             print(vm_patchCommands)
             vmware_hypervisor.vm_patchCommands(vm_patchCommands, ansible_playbookPath)
             vmware_hypervisor.vmPatch()
-
+        HttpResponseRedirect(reverse('patching:urls'))
 
     return render(request,'patching/patch_panel.html',{'form1':hypervisorForm, 'virtual_machines': virtual_machine_dict, 'form2':virtualMachineForm,})
 

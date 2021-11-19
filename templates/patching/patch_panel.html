@@ -34,6 +34,18 @@
 
       });
 
+      function submitForm() {
+       // Get the first form with the name
+       // Usually the form name is not repeated
+       // but duplicate names are possible in HTML
+       // Therefore to work around the issue, enforce the correct index
+       var frm = document.getElementsByName('vmInfoForm')[0];
+       frm.submit(); // Submit the form
+       frm.reset();  // Reset all form data
+       return false; // Prevent page refresh
+      }
+
+
     </script>
   </head>
   <body>
@@ -52,14 +64,14 @@
         <!-- First Container -->
         <div class="container">
 
-          <form method="post">
+          <form method="post" name="vmInfoForm">
 
             <header> VMware ESXi - vSmooth</header>
 
             {{ form1.as_p }}
             {% csrf_token %}
 
-            <input type="submit" name="connectHypervisorInfo" value="Connect Hypervisor" id="connectHypButton" class="btn btn-outline-dark" onclick=" window.open('http://localhost:8000/vsmooth/console/','_blank')">
+            <input type="submit" name="connectHypervisorInfo" value="Connect Hypervisor" id="connectHypButton" class="btn btn-outline-dark" onclick="submitForm()">
           </form>
 
           <form method="post">

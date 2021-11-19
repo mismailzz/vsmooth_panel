@@ -12,6 +12,11 @@ import os
 def index(request):
     return render(request, 'patching/index.html')
 
+def ansible_console_page(request):
+    return render(request, 'patching/ansible_console.html')
+
+def ansible_console_run():
+    os.system("frontail/frontail/bin/frontail temp/patching/ansible_output.log &")
 
 def connect_select_patch(request):
     hypervisorForm = HypervisorInfo_Form()
@@ -41,6 +46,8 @@ def connect_select_patch(request):
             #form.save(commit=True)
             #return index(request)
             virtual_machine_dict = vm_readJson()
+
+            ansible_console_run()
         else:
             print('ERROR FORM INVALID')
 

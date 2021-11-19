@@ -59,7 +59,7 @@
             {{ form1.as_p }}
             {% csrf_token %}
 
-            <input type="submit" name="connectHypervisorInfo" value="Connect Hypervisor" id="connectHypButton" class="btn btn-outline-dark">
+            <input type="submit" name="connectHypervisorInfo" value="Connect Hypervisor" id="connectHypButton" class="btn btn-outline-dark" onclick=" window.open('http://localhost:8000/vsmooth/console/','_blank')">
           </form>
 
           <form method="post">

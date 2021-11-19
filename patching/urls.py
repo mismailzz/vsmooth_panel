@@ -6,4 +6,5 @@ from patching import views
 urlpatterns = [
     #url(r'^patch/$', views.vm_patch, name='vm_patch'), #function mapping to our application
     url(r'^patch/$', views.connect_select_patch, name="connect_select_patch"),
+    url(r'^console/$', views.ansible_console_page, name='ansible_console_page'),
 ]

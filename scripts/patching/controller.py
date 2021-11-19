@@ -8,10 +8,15 @@ def scriptEndExecution():
  os.system("rm -f vmInventory")
 
 def getVmInformation():
- os.system("ansible-playbook -i playbook/patching/inventory.ini playbook/patching/vmInfo.yml -e 'ansible_python_interpreter=/usr/bin/python3'")
+    os.system("> temp/patching/ansible_output.log")
+    command_toexe = "ansible-playbook -i playbook/patching/inventory.ini playbook/patching/vmInfo.yml -e 'ansible_python_interpreter=/usr/bin/python3' 2>&1 | tee -a out.log"
+    os.system(command_toexe)
 
 def startpatch():
- os.system("ansible-playbook -i playbook/patching/inventory.ini playbook/patching/vmpatch.yml  -e 'ansible_python_interpreter=/usr/bin/python3'")
+    os.system("> temp/patching/ansible_output.log")
+    command_toexe = "ansible-playbook -i playbook/patching/inventory.ini playbook/patching/vmpatch.yml  -e 'ansible_python_interpreter=/usr/bin/python3' 2>&1 | tee -a out.log"
+    os.system(command_toexe)
+    os.system(command_toexe)
 
 ##-----------------------------MAIN FUNCTION----------------------------------
 

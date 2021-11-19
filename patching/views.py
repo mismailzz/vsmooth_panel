@@ -1,6 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import reverse
 from . import forms
 from patching.forms import HypervisorInfo_Form, VirtualMachineInfo_Form
 import scripts.patching.vmfilter as ansible_vminfo
@@ -45,7 +43,6 @@ def connect_select_patch(request):
                 #return index(request)
                 virtual_machine_dict = vm_readJson()
                 ansible_console_run()
-                HttpResponseRedirect(reverse('patching.views.connect_select_patch'))
         else:
             print('ERROR FORM INVALID')
 
@@ -56,7 +53,7 @@ def connect_select_patch(request):
             print("Virtual Machines Selected:", selected_vms)
             vmware_hypervisor = ansible_controller.VMwareHypervisorVariables()
             vmware_hypervisor.vmSelectedInfo(selected_vms, ansible_playbookPath)
-            HttpResponseRedirect(reverse('patching:urls'))
+
     elif 'executevmbutton' in request.POST:
         virtualMachineForm = VirtualMachineInfo_Form(request.POST)
         vmware_hypervisor = ansible_controller.VMwareHypervisorVariables()
@@ -72,7 +69,6 @@ def connect_select_patch(request):
             print(vm_patchCommands)
             vmware_hypervisor.vm_patchCommands(vm_patchCommands, ansible_playbookPath)
             vmware_hypervisor.vmstartPatch()
-        HttpResponseRedirect(reverse('patching:urls'))
 
     return render(request,'patching/patch_panel.html',{'form1':hypervisorForm, 'virtual_machines': virtual_machine_dict, 'form2':virtualMachineForm,})
 

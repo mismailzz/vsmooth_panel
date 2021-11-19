@@ -107,8 +107,6 @@ class VMwareHypervisorVariables:
         variablefile.write(guestvm_password)
         variablefile.close()
 
-        #GET VM INFORMATION
-        getvmInfo()
 
     def vm_patchCommands(self, patch_commands, ansible_playbookPath):
 
@@ -129,18 +127,16 @@ class VMwareHypervisorVariables:
             patchfile.write(' - "' + temp_cmd + ' 2>&1 | tee -a out.log "\n')
         patchfile.close()
 
-        #START PATCH
-        vmstartPatch()
 
     #ANSIBLE PLAYBOOK EXECUTION COMMANDS FUNCTIOIN
     def getvmInfo(self):
         os.system("> temp/patching/ansible_output.log")
-        command_toexe = "ansible-playbook -i playbook/patching/inventory.ini playbook/patching/vmInfo.yml -e 'ansible_python_interpreter=/usr/bin/python3' 2>&1 | tee -a out.log"
+        command_toexe = "ansible-playbook -i playbook/patching/inventory.ini playbook/patching/vmInfo.yml -e 'ansible_python_interpreter=/usr/bin/python3' 2>&1 | tee -a temp/patching/ansible_output.log"
         os.system(command_toexe)
 
     def vmstartPatch(self):
         startpatch()
         os.system("> temp/patching/ansible_output.log")
-        command_toexe = "ansible-playbook -i playbook/patching/inventory.ini playbook/patching/vmpatch.yml  -e 'ansible_python_interpreter=/usr/bin/python3' 2>&1 | tee -a out.log"
+        command_toexe = "ansible-playbook -i playbook/patching/inventory.ini playbook/patching/vmpatch.yml  -e 'ansible_python_interpreter=/usr/bin/python3' 2>&1 | tee -a temp/patching/ansible_output.log"
         os.system(command_toexe)
         os.system(command_toexe)

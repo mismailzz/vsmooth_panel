@@ -50,7 +50,7 @@ def connect_select_patch(request):
                 #return index(request)
                 virtual_machine_dict = vm_readJson()
                 ansible_console_run()
-                HttpResponseRedirect(reverse('/'))
+                HttpResponseRedirect(reverse('patching.views.connect_select_patch'))
         else:
             print('ERROR FORM INVALID')
 

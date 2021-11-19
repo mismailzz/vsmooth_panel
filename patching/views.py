@@ -24,11 +24,6 @@ def connect_select_patch(request):
     hypervisorForm = HypervisorInfo_Form()
     virtualMachineForm = VirtualMachineInfo_Form()
 
-    vhostname = ""
-    vusername = ""
-    vpassword = ""
-    vm_username = ""
-    vm_password = ""
     ansible_playbookPath = "playbook/patching/"
 
     virtual_machine_dict = {}
@@ -42,7 +37,7 @@ def connect_select_patch(request):
             vhostname = hypervisorForm.cleaned_data['esxi_hostname']
             vusername = hypervisorForm.cleaned_data['esxi_username']
             vpassword = hypervisorForm.cleaned_data['esxi_password']
-            if vhostname == "" and vusername == "" and vpassword == "":
+            if vhostname != "" and vusername != "" and vpassword != "":
                 vmware_hypervisor = ansible_controller.VMwareHypervisorVariables(vhostname, vusername, vpassword, ansible_playbookPath)
                 vmware_hypervisor.getvmInfo()
                 vm_resultjson()

@@ -1,0 +1,45 @@
+---
+- hosts: localhost
+  gather_facts: no
+  vars:
+    - temp_filePath: "../../temp/patching/ansible_vmresult"
+    - datacenter_name: "ha-datacenter"
+
+  vars_files:
+    - hypvariablefile
+    - vm_patchvariablefile
+    - vmvariablefile
+
+  tasks:
+    - name: Gather all registered virtual machines
+      community.vmware.vmware_vm_info:
+        hostname: "{{esxi_hostname}}"
+        username: "{{esxi_username}}"
+        password: "{{esxi_password}}"
+        vm_type: vm
+        validate_certs: no
+      delegate_to: localhost
+      register: vminfo
+
+    - name: Create files
+      command: touch /root/"{{ item.guest_name }}.log"
+      when: ( item.guest_name in vm_toPatched )
+      loop: "{{ vminfo.virtual_machines }}"
+      delegate_to: localhost
+
+    - name: fetch file from vm
+      community.vmware.vmware_guest_file_operation:
+        hostname: "{{esxi_hostname}}"
+        username: "{{esxi_username}}"
+        password: "{{esxi_password}}"
+        datacenter: "{{ datacenter_name }}"
+        validate_certs: no
+        vm_id: "{{ item.guest_name }}"
+        vm_username: "{{ guestvm_username }}"
+        vm_password: "{{ guestvm_password }}"
+        fetch:
+          src: "/root/out.log"
+          dest: "/root/{{ item.guest_name }}.log"
+      when: ( item.guest_name in vm_toPatched )
+      loop: "{{ vminfo.virtual_machines }}"
+      delegate_to: localhost

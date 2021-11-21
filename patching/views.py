@@ -23,6 +23,8 @@ def get_report(request):
     #Get the information of log files
     onlyfiles = [f for f in os.listdir("temp/patching/logs") if os.isfile(os.join("temp/patching/logs", f))]
     vm_logs_dict = {'vm_logFiles': onlyfiles}
+    vmware_hypervisor = ansible_controller.VMwareHypervisorVariables()
+    vmware_hypervisor.fetchVMlogfile()
     return render(request,'patching/vm_logs.html', vm_logs_dict)
 
 

@@ -18,6 +18,14 @@ def ansible_console_page(request):
 def ansible_console_run():
     os.system("frontail/bin/frontail temp/patching/ansible_output.log &")
 
+def get_report(request):
+
+    #Get the information of log files
+    onlyfiles = [f for f in os.listdir("temp/patching/logs") if os.isfile(os.join("temp/patching/logs", f))]
+    vm_logs_dict = {'vm_logFiles': onlyfiles}
+    return render(request,'patching/vm_logs.html', vm_logs_dict)
+
+
 def connect_select_patch(request):
     hypervisorForm = HypervisorInfo_Form()
     virtualMachineForm = VirtualMachineInfo_Form()

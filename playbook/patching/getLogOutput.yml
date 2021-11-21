@@ -22,7 +22,7 @@
       register: vminfo
 
     - name: Create files
-      command: touch "{{temp_filePath}}"/logs/"{{ item.guest_name }}.log"
+      command: touch "{{temp_filePath}}/logs/{{ item.guest_name }}.log"
       when: ( item.guest_name in vm_toPatched )
       loop: "{{ vminfo.virtual_machines }}"
       delegate_to: localhost
@@ -39,7 +39,7 @@
         vm_password: "{{ guestvm_password }}"
         fetch:
           src: "/root/out.log"
-          dest: "{{temp_filePath}}"/logs/"{{ item.guest_name }}.log"
+          dest: "{{temp_filePath}}/logs/{{ item.guest_name }}.log"
       when: ( item.guest_name in vm_toPatched )
       loop: "{{ vminfo.virtual_machines }}"
       delegate_to: localhost

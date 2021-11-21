@@ -135,7 +135,6 @@ class VMwareHypervisorVariables:
         os.system(command_toexe)
 
     def vmstartPatch(self):
-        startpatch()
         os.system("> temp/patching/ansible_output.log")
         command_toexe = "ansible-playbook -i playbook/patching/inventory.ini playbook/patching/vmpatch.yml  -e 'ansible_python_interpreter=/usr/bin/python3' 2>&1 | tee -a temp/patching/ansible_output.log"
         os.system(command_toexe)

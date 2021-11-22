@@ -21,7 +21,8 @@
     <div class="">
       <ul>
         {% for vmfile in vm_logFiles %}
-          <li>{{vmfile}}</li>
+          <!--<li>{{vmfile}}</li>-->
+          <li><a href="temp/patching/logs/{{vmfile}}.log">{{vmfile}}</a></li>
         {% endfor %}
       </ul>
     </div>

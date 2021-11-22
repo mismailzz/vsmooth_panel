@@ -28,6 +28,10 @@ def get_report(request):
     return render(request,'patching/vm_logs.html', vm_logs_dict)
 
 
+def get_logs(request):
+    
+
+
 def connect_select_patch(request):
     hypervisorForm = HypervisorInfo_Form()
     virtualMachineForm = VirtualMachineInfo_Form()

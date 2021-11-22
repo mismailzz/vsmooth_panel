@@ -29,7 +29,13 @@ def get_report(request):
 
 
 def get_logs(request):
-    
+    onlyfiles = [f for f in os.listdir("temp/patching/logs") if os.path.isfile(os.path.join("temp/patching/logs", f))]
+    for i in onlyfiles:
+        if i in request.GET:
+            myfile = str(onlyfiles[i])
+            print(myfile)
+            break
+    return render(request, myfile)
 
 
 def connect_select_patch(request):

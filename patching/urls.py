@@ -8,5 +8,4 @@ urlpatterns = [
     url(r'^patch/$', views.connect_select_patch, name="connect_select_patch"),
     url(r'^patch/console/$', views.ansible_console_page, name='ansible_console_page'),
     url(r'^patch/console/report/$', views.get_report, name='get_report'),
-    url(r'^patch/console/report/logs$', views.get_logs, name='get_logs'),
 ]

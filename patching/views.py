@@ -5,7 +5,7 @@ import scripts.patching.vmfilter as ansible_vminfo
 import scripts.patching.controller as ansible_controller
 import json
 import os
-
+from django.http import HttpResponse
 
 
 # Create your views here.
@@ -20,23 +20,20 @@ def ansible_console_run():
 
 def get_report(request):
 
+    #print(request.POST.get("vlogs"))
+    if request.POST.get("vlogs"):
+      myfile = "temp/patching/logs/" +  str(request.POST.get("vlogs"))
+      f = open(myfile, 'r')
+      file_content = f.read()
+      f.close()
+      return HttpResponse(file_content, content_type="text/plain")
+
     #Get the information of log files
     onlyfiles = [f for f in os.listdir("temp/patching/logs") if os.path.isfile(os.path.join("temp/patching/logs", f))]
     vm_logs_dict = {'vm_logFiles': onlyfiles}
     vmware_hypervisor = ansible_controller.VMwareHypervisorVariables()
     vmware_hypervisor.fetchVMlogfile()
     return render(request,'patching/vm_logs.html', vm_logs_dict)
-
-
-def get_logs(request):
-    onlyfiles = [f for f in os.listdir("temp/patching/logs") if os.path.isfile(os.path.join("temp/patching/logs", f))]
-    for i in onlyfiles:
-        if i in request.GET:
-            myfile = str(onlyfiles[i])
-            print(myfile)
-            break
-    return render(request, myfile)
-
 
 def connect_select_patch(request):
     hypervisorForm = HypervisorInfo_Form()

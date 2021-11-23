@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -18,16 +19,36 @@
   </head>
   <body>
 
-    <div class="">
-      <ul>
-        {% for vmfile in vm_logFiles %}
-          <!--<li>{{vmfile}}</li>-->
-          <li><a href="logs/{{vmfile}}">{{vmfile}}</a></li>
-        {% endfor %}
-      </ul>
-    </div>
 
+       <p>
+        Select a radio button and click on Submit.
+      </p>
 
+         {% for vmfile in vm_logFiles %}
+                <input type="radio" name="vmlogselect" value={{vmfile}}>{{vmfile}}
+         {% endfor %}
+
+          <button type="button" onclick="displayRadioValue()">
+          Submit
+          </button>
+          <br>
+
+        <form method="post">
+        {% csrf_token %}
+        <textarea name="vlogs" id="result"></textarea>
+        <input type="submit" name="logsInfo">
+        </form>
+
+    <script>
+        function displayRadioValue() {
+            var ele = document.getElementsByName('vmlogselect');
+
+            for(i = 0; i < ele.length; i++) {
+                if(ele[i].checked)
+                document.getElementById("result").innerHTML = ele[i].value;
+            }
+        }
+    </script>
 
   </body>
 </html>

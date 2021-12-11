@@ -2,7 +2,7 @@
   hosts: local
   gather_facts: no
   vars_files:
-   - variablefile
+   - hypvariablefile
   tasks:
     - name: Gather all registered virtual machines
       community.vmware.vmware_vm_info:
@@ -18,20 +18,6 @@
     - name: Delete Existing file
       file:
        state: absent
-       path: varDir/temp
+       path: ../../temp/patching/ansible_vmresult
       delegate_to: localhost
-    - local_action: copy content={{ vminfo }} dest=varDir/temp
-
-    - name: Display results
-      debug:
-        var: vminfo
-
-    - name: Run a script using an executable in a system path
-      ansible.builtin.script: ./scripts/filter.py
-      args:
-       executable: python3
-      delegate_to: localhost
-      register: vmDict
-    - name: Resultant Dictionary
-      debug:
-        var: vmDict.stdout_lines
+    - local_action: copy content={{ vminfo }} dest=../../temp/patching/ansible_vmresult

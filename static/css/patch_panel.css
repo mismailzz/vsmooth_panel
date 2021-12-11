@@ -35,14 +35,8 @@ header{
 }
 
 #connectHypButton{
-  width: 200px;
-  height: 40px;
   margin-left: 70%;
   margin-bottom: 3%;
-  background-color: green;
-  color: white;
-  border: solid green;
-  border-radius: 20px;
   cursor: pointer;
 
 }
@@ -53,37 +47,23 @@ header{
 }
 
 #selectVMbutton{
-  width: 210px;
-  height: 40px;
-  margin-left: 68%;
+  margin-left: 67%;
   margin-bottom: 2%;
-  background-color:  green ;
-  color: white;
-  border: solid  green ;
-  border-radius: 20px;
   cursor: pointer;
 }
 
 #patchTextarea{
-  height: 70vh;
+  height: 57vh;
 }
 
 #executeButton{
   float: right;
-  width: 200px;
-  height: 40px;
   margin-right: 1%;
   margin-bottom: 3%;
-  background-color: red;
-  color: white;
-  border: solid red;
-  border-radius: 20px;
   cursor: pointer;
 }
 .col{
   height:85vh;
-  border: 1px solid black;
-  border-radius: 20px;
   margin: 1px;
   clear:both;
   /*overflow: auto;*/

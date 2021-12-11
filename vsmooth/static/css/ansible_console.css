@@ -1,0 +1,33 @@
+html, body{
+    height: 100%;
+}
+
+body{
+  font-family: 'Roboto Mono', monospace;
+  color: white;
+  background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+  background-repeat: no-repeat;
+  /*
+  background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
+  */
+}
+h2{
+  font-family: 'Kings', cursive;
+}
+.mytitle{
+  margin-top: 1%;
+  text-align: center;
+}
+
+#ansible_panel {
+
+  height: 80%;
+  width: 95%;
+}
+
+#myframe{
+  height: 100%;
+  width: 100%;
+  border: None;
+}
